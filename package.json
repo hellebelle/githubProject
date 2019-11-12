@@ -1,0 +1,23 @@
+{
+  "name": "githubproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellebelle/githubProject.git"
+  },
+  "author": "Anna Helana Maliakal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hellebelle/githubProject/issues"
+  },
+  "homepage": "https://github.com/hellebelle/githubProject#readme",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  }
+}
