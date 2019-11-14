@@ -4,7 +4,8 @@ const btnCommits = document.getElementById("btnCommits")
 const divResult = document.getElementById("divResult")
 btnRepo.addEventListener("click", getRepos)
 btnIss.addEventListener("click", getIssues)
-btnCommits.addEventListener("click", getCommits)
+btnCommits.addEventListener("click", e=>getCommits())
+
 async function getRepos(){
     clear();
     const url = "https://api.github.com/search/repositories?q=stars:>150000"
@@ -37,9 +38,9 @@ async function getIssues(){
     })  
 }
 
-async function getCommits(){
+async function getCommits(url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2019-03-01..2019-03-31"){
     clear();
-    const url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2019-03-01..2019-03-31"
+
     const headers = {
         "Accept" : "application/vnd.github.cloak-preview"
     }
@@ -47,16 +48,36 @@ async function getCommits(){
         "method" : "GET",
         "headers" : headers
     })
+    const link = response.headers.get("link")
+    const links = link.split(",")
+    const urls = links.map(a=> {
+        return{
+            url: a.split(";")[0].replace(">","").replace("<",""),
+            title: a.split(";")[1]
+        }
+    })
     const result = await response.json()
         
     result.items.forEach(i =>{
+        const img = document.createElement("img")
+        img.src =i.author.avatar_url;
+        img.style.width ="32px"
+        img.style.height ="32px"
         const anchor = document.createElement("a")
         anchor.href = i.html_url
-        anchor.textContent = i.commit.message
+        anchor.textContent = i.commit.message.substr(0,120) + "..."
+        divResult.appendChild(img)
         divResult.appendChild(anchor)
         divResult.appendChild(document.createElement("br"))
 
-    })  
+    }) 
+    
+    urls.forEach(u=> {
+          const btn =document.createElement("button")
+          btn.textContent = u.title;
+          btn.addEventListener("click", e=> getCommits(u.url) )
+          divResult.appendChild(btn);
+    })
 }
 
 function clear(){
