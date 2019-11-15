@@ -1,8 +1,10 @@
-const searchBtn = document.getElementById('search-btn')
+const searchBr = document.getElementById('search-bar')
 const search = document.getElementById('search')
 const tip = document.getElementById('tip')
+const searchBtn = document.getElementById('btn')
 
-searchBtn.addEventListener('click', () => {
+
+searchBr.addEventListener('click', () => {
     search.style.width = '80%';
     search.style.paddingLeft = '60px';
     search.style.cursor = 'text';
@@ -25,6 +27,8 @@ searchBtn.addEventListener('click', () => {
 })
 
 search.addEventListener('keydown', () => {
-    tip.style.visibility = 'visible';
-    tip.style.opacity = '1';
+    //tip.style.visibility = 'visible';
+    searchBtn.style.visibility = 'visible';
+    //tip.style.opacity = '1';
 })
+

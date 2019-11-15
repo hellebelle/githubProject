@@ -1,6 +1,6 @@
 const searchBr = document.getElementById('search-bar')
 const search = document.getElementById('search')
-const tip = document.getElementById('tip')
+//const tip = document.getElementById('tip')
 const searchBtn = document.getElementById('btn')
 
 
@@ -32,3 +32,22 @@ search.addEventListener('keydown', () => {
     //tip.style.opacity = '1';
 })
 
+function loadXML() {
+    var input = document.getElementById("search").value;
+    var output = "https://api.github.com/users/"+input;
+    console.log(output);
+    var result = parseJson(output);
+
+}
+
+function parseJson(url) {
+    const Http = new XMLHttpRequest();
+    Http.open("GET",url);
+    Http.send();
+    Http.onreadystatechange = function(){
+        if(this.status==200){
+            console.log(Http.responseText)
+        }
+        
+    }
+} 

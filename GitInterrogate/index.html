@@ -5,21 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index.css">
 
 </head>
 <body>
     <div class="container">
+        <img src="images/iconfinder_mark-github_298822.svg" class = "logo">
         <h1>Interrogate GitHub</h1>
-
         <div class="search-contain">
-            <img src="images/search.svg" id="search-btn" alt="search button">
-            <input type="text" id="search" placeholder="">
+            <img src="images/search.svg" id="search-bar" alt="search bar" class = "bar">
+            <input type="text" id="search" placeholder="" value="">
+            <br><br>
+            <div id ='btn-container'>
+                <button onclick="loadXML()" id="btn">SEARCH</button>
+            </div>
             <p id="tip">Hit enter to search</p>
+
         </div>
     </div>
     <script src = "imchangingit.js"></script>
-
     <!-- <button id = 'btnRepos'> Repositories</button>
     <button id = 'btnIss'> Issues</button>
     <button id = 'btnCommits'> Commits</button> -->
