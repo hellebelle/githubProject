@@ -37,17 +37,21 @@ function loadXML() {
     var output = "https://api.github.com/users/"+input;
     console.log(output);
     var result = parseJson(output);
+    console.log(result);
 
 }
 
 function parseJson(url) {
     const Http = new XMLHttpRequest();
+   // var result = null;
     Http.open("GET",url);
     Http.send();
     Http.onreadystatechange = function(){
         if(this.status==200){
             console.log(Http.responseText)
+            result = JSON.parse(Http.responseText)
+            return result;
         }
-        
     }
+    return null;
 } 
