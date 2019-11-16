@@ -1,3 +1,4 @@
+<!--HTML for page to display home page-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,16 +11,15 @@
 </head>
 <body>
     <div class="container">
+        <!--logo img-->
         <img src="images/iconfinder_mark-github_298822.svg" class = "logo">
         <h1>Interrogate GitHub</h1>
         <div class="search-contain">
             <img src="images/search.svg" id="search-bar" alt="search bar" class = "bar">
             <input type="text" id="search" placeholder="" value="">
-            <br><br>
             <div id ='btn-container'>
-                <button onclick="loadXML()" id="btn">SEARCH</button>
+                <button onclick="loadData()" id="btn">SEARCH</button>
             </div>
-            <!--<p id="tip">Hit enter to search</p>-->
 
         </div>
     </div>

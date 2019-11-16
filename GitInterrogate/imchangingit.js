@@ -1,6 +1,5 @@
 const searchBr = document.getElementById('search-bar')
 const search = document.getElementById('search')
-//const tip = document.getElementById('tip')
 const searchBtn = document.getElementById('btn')
 
 
@@ -27,12 +26,14 @@ searchBr.addEventListener('click', () => {
 })
 
 search.addEventListener('keydown', () => {
-    //tip.style.visibility = 'visible';
     searchBtn.style.visibility = 'visible';
-    //tip.style.opacity = '1';
 })
 
-function loadXML() {
+searchBtn.addEventListener('click', () =>{
+    window.location = 'user.html';
+})
+
+function loadData() {
     var input = document.getElementById("search").value;
     var output = "https://api.github.com/users/"+input;
     console.log(output);
