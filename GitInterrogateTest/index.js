@@ -1,6 +1,35 @@
-const searchBr = document.getElementById('search-bar')
+$(document).ready(function(){
+    $("#search-bar").click(function() {
+       $("#search").css("width","80%"); 
+       $("#search").css("paddingLeft","60px");
+       $("#search").css("cursor","text");
+       $("#search").focus();
+
+       var i = 0;
+       var message = 'Search for a GitHub User';
+       var speed = 100;
+
+       function typeWriter(){
+           if (i < message.length){
+               msg = $("#search").attr("placeholder") + message.charAt(i);
+               $("#search").attr("placeholder",msg)
+               i++;
+               setTimeout(typeWriter,speed);
+           }
+       }
+       typeWriter();
+    })
+
+    $("#search").keydown(function () {
+        $("#btn").css("visibility", "visible");
+    })
+
+    
+
+
+});
+/* const searchBr = document.getElementById('search-bar')
 const search = document.getElementById('search')
-//const tip = document.getElementById('tip')
 const searchBtn = document.getElementById('btn')
 
 
@@ -55,3 +84,4 @@ function parseJson(url) {
     }
     return null;
 } 
+ */
