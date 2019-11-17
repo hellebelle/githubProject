@@ -30,29 +30,38 @@ search.addEventListener('keydown', () => {
 })
 
 searchBtn.addEventListener('click', () =>{
-    window.location = 'user.html';
+    
 })
 
 function loadData() {
     var input = document.getElementById("search").value;
     var output = "https://api.github.com/users/"+input;
     console.log(output);
-    var result = parseJson(output);
-    console.log(result);
+    var output_parsed = parseJson(output);
+    console.log(output_parsed);
+   // window.location = 'user.html';
 
 }
 
 function parseJson(url) {
-    const Http = new XMLHttpRequest();
-   // var result = null;
+    var Http = new XMLHttpRequest();
+    var result = null;
     Http.open("GET",url);
     Http.send();
-    Http.onreadystatechange = function(){
-        if(this.status==200){
-            console.log(Http.responseText)
-            result = JSON.parse(Http.responseText)
-            return result;
-        }
+    Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+        result = JSON.parse(Http.responseText);
+        console.log(result)
     }
-    return null;
+   //result = JSON.parse(Http.responseText);
+    //console.log(result);
+    return result;
+    //return result;
 } 
+
+
+/*  $(document).ready(function () {
+     $("#search-bar").click(function(){
+
+     })
+ }) */
