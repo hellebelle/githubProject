@@ -24,6 +24,21 @@ $(document).ready(function(){
         $("#btn").css("visibility", "visible");
     })
 
+    $("#btn").click(function () {
+        $("div.container").css("visibility","hidden");
+        $("#btn").css("visibility","hidden");
+        loadData();
+
+        function loadData() {
+            var user = $("#search").val() ? $("#search").val() : "github";
+            var url = "https://api.github.com/users/" + user;
+            console.log(url);
+            $.get( url, function (data, status) {
+                console.log(status);
+                
+            });
+        }
+    })
     
 
 
