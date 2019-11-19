@@ -60,8 +60,3 @@ function parseJson(url) {
 } 
 
 
-/*  $(document).ready(function () {
-     $("#search-bar").click(function(){
-
-     })
- }) */
