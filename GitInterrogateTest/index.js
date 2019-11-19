@@ -1,3 +1,5 @@
+import { callbackify } from "util";
+
 $(document).ready(function(){
     $("#search-bar").click(function() {
        $("#search").css("width","80%"); 
@@ -27,17 +29,24 @@ $(document).ready(function(){
     $("#btn").click(function () {
         $("div.container").css("visibility","hidden");
         $("#btn").css("visibility","hidden");
-        loadData();
 
-        function loadData() {
-            var user = $("#search").val() ? $("#search").val() : "github";
-            var url = "https://api.github.com/users/" + user;
-            console.log(url);
-            $.get( url, function (data, status) {
+        var user = $("#search").val() ? $("#search").val() : "github";
+        loadData(user, displayUser);
+
+        function loadData(user,callback1,callback2) {
+            
+            var url_User = "https://api.github.com/users/" + user;
+            console.log(url_User);
+            $.get( url_User, function (data, status) {
                 console.log(status);
-                
+                success: callback1(data, status);
             });
-        }
+            var url_Repos = "https://api.github.com/users/" + searchterm + "/repos"
+            $.get(url_Repos,function(data, status){
+                console.log(status);
+                success: callback2(data,status);
+            });
+        };
     })
     
 
