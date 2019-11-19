@@ -2,7 +2,7 @@ body {
     height: 100vh;
     margin: 0;
     display: grid;
-    justify-content: center;
+    //justify-content: center;
     align-items: center;
     font-family: 'Montserrat';
     background-color:white;
@@ -13,7 +13,7 @@ h1 {
 }
 .container {
     text-align: center;
-}
+}  
 input {
     font-family: 'Montserrat';
     background: rgb(15, 143, 68);
@@ -50,10 +50,11 @@ input {
     cursor: pointer;
 }
 
-div.btn-container{
+h2{
+    justify-content: first baseline;
+    align-content: flex-start;
 
-
-}
+} 
 
 button{
     font-family: 'Montserrat';
