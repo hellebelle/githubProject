@@ -123,10 +123,10 @@ $(document).ready(function(){
 
         function displayRepos(data,status) {
             for (var i = 0; i < data.length; i++) {
-				$("#repos_links").append("<li id='repo" + i + "'>" + data[i].name + "</li>");
+				$("div.content").append("<li id='repo" + i + "'>" + data[i].name + "</li>");
 			};
-
-			$("#repos_links").children().click(function(){
+            $("button.dropbtn").css("visibility", "visible");
+			$("div.content").children().click(function(){
 			
 				// get the chosen repo id by reference to the id of the element in list that was clicked
                 var repoChoice = $("#"+this.id).html();
