@@ -49,11 +49,11 @@ $(document).ready(function(){
     
 
         function getLanguages(callback, repo){
-            $.get(url + "/" + repo + "/languages",
+            $.get("https://api.github.com/repos/" + user + "/" + repo + "/languages",
                 function (data, status) {
-                    console.log(status);
+                    console.log(data);
                     success: callback(data,status,repo);
-                });
+            });
         };
 
 
@@ -130,8 +130,21 @@ $(document).ready(function(){
 			
 				// get the chosen repo id by reference to the id of the element in list that was clicked
                 var repoChoice = $("#"+this.id).html();
-
+                getLanguages(displayLanguages, repoChoice);
 			});
+        }
+
+        function displayLanguages(data, status, repo){
+            var dataset = [];
+            for (var key in data) {
+                if(data.hasOwnProperty(key)){
+                    var item = new Object();
+                    item.key = key;
+                    item.value = data[key];
+                    dataset.push(item);
+                }
+            }
+            console.log(dataset);
         }
 
     })
