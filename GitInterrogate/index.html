@@ -8,9 +8,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Load d3.js -->
+    <!-- Load d3.js & color scale -->
     <script src="https://d3js.org/d3.v4.js"></script>
-
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -22,21 +22,27 @@
             <input type="text" id="search" placeholder="" value="">
             <br><br>
             <button id="btn">SEARCH</button>
-
+            <p>THIS USER DOES NOT EXIST</p>
         </div>
     </div>
-    <div id ="user_profile">
-        <h2 id = "username"></h2>
-    </div>
+    <div class = "user_container">
+        <div id ="user_profile">
+            <h2 id = "username">
 
-    <div class ="repos_links">
-        <button class = "dropbtn">REPOSITORIES</button>
-        <div class = "content"></div>
+                    <img id = "user_img">
+                    
+            </h2>
+        </div>
+    
+        <div class ="repos_links">
+            <button class = "dropbtn">REPOSITORIES</button>
+            <div class = "content"></div>
+        </div>
+        <div id = "repo_name"></div>
+        <!-- Create a div where the graph will take place -->
+        <div id = "graph"></div>
     </div>
-    <!-- Create a div where the graph will take place -->
-    <div id = "graph">
-
-    </div>
+    
     <script src = "imchangingit.js"></script>
     
 </body>

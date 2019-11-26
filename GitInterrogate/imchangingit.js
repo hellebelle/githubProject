@@ -29,99 +29,45 @@ $(document).ready(function(){
         $("#btn").css("visibility","hidden");
 
         var user = $("#search").val() ? $("#search").val() : "github";
-        var url = "https://api.github.com/users/" + user;
-        loadUser(url, displayUser, displayRepos);
+        var url_user = "https://api.github.com/users/" + user;
+        loadUser(url_user, displayUser);
+        loadRepos(url_user,displayRepos);
         
-        
-        function loadUser(url,callback1,callback2) {
-            $.get(url,
+        function loadUser(url_user,callback1) {
+            $.get(url_user,
                 function (data, status) {
                     console.log(status);
-                    success: callback1(data, status);
+                    callback1(data);
+                }).fail(function(){
+                    alert("User Not Found. Please refresh and try again with a valid username.");
                 });
-            
-            $.get(url + "/repos",
-            function (data,status) {
-                console.log(status);
-                success: callback2(data,status);
-            });
         };
     
+        function loadRepos(url_user,callback2) {
+            $.get(url_user + "/repos",
+                function (data,status) {
+                    console.log(status);
+                    success: callback2(data,status);
+            });
+        }
 
         function getLanguages(callback, repo){
             $.get("https://api.github.com/repos/" + user + "/" + repo + "/languages",
                 function (data, status) {
-                    console.log(data);
-                    success: callback(data,status,repo);
+                    console.log(status);
+                    success: callback(data,repo);
             });
         };
 
-
- 
-            // var page = 1;
-            // var url_Repos = result.repos_url + `?client_id=${client_id}&
-            // client_secret=${client_secret}`;
-            // var total_repos = 0;
-            // while (true) {
-            //     console.log(url_Repos);
-            //     const repos_response = await fetch(url_Repos);
-            //     const repos_result = await repos_response.json();
-            //     console.log(repos_result);
-            //     var count_repo = Object.keys(repos_result).length;
-            //     //console.log("counttttt:::",count_repo)
-            //     total_repos += count_repo;
-            //     console.log("total number of repos:",total_repos)
-            //     if (count_repo == 30){
-            //         page = page + 1;
-            //         url_Repos = result.repos_url + `?page=` + page + `?client_id=${client_id}&
-            //             client_secret=${client_secret}`; 
-                        
-            //     }
-            //     else{
-            //         break;
-            //     }
-            // }
-            // console.log(total_repos);
-           /*  const repos_result = await repos_response.json();
-            console.log(repos_result);
-            
-            //number of commits
-            var num_commits = 0;
-            for(var i = 0; i< repos_result.length; i++){
-                var obj = repos_result[i];
-                const commits = await fetch(`https://api.github.com/repos/${user}/${obj.name}/commits?per_page=100&client_id=${client_id}&
-                    client_secret=${client_secret}`);
-                //const contributors = await fetch(obj.contibutors_url + `?client_id=${client_id}&
-                //client_secret=${client_secret}`);
-                const con_results = await commits.json();
-         /*        var item = JSON.parse(con_results);
-                console.log(item);
-                var item_len = Object.keys(item[0].length);
-                console.log(item_len); */
-               //console.log(con_results); */
-
-             
-           /*  repos_result.items.forEach(i => {
-                var repo = new Object();
-                repo.key = i.name;
-                const contributors = i.contributors_url;
-                var commits = 0
-                contributors.items.forEach(j => {
-                   commits+=j.contributions;
-                   console.log(commits);
-                });
-                repo.value = commits;  
-            }); */
-            //"https://api.github.com/users/" + user + "/repos"
-
-        
-
-        function displayUser(data, status) {
+        function displayUser(data) {
             $("div.container").remove();
+            $("div.user_container").css("visibility", "visible");
+            $("#user_img").attr("src", data.avatar_url);
             $("#user_profile").append(data.login);
+            
         }
 
-        function displayRepos(data,status) {
+        function displayRepos(data) {
             for (var i = 0; i < data.length; i++) {
 				$("div.content").append("<li id='repo" + i + "'>" + data[i].name + "</li>");
 			};
@@ -134,10 +80,13 @@ $(document).ready(function(){
 			});
         }
 
-        function displayLanguages(data, status, repo){
+        function displayLanguages(data, repoChoice){
+            $("#repo_name").remove();
+            d3.selectAll("svg").remove();
+            $("div.user_container").append("<div id = 'repo_name'>"+ repoChoice +"</div>")
             // set the dimensions and margins of the graph
-            var width = 450
-            var height = 450
+            var width = 1050
+            var height = 650
             var margin = 40
             // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
             var radius = Math.min(width, height)/2 - margin
@@ -150,28 +99,72 @@ $(document).ready(function(){
             
             // set the color scale
             var color = d3.scaleOrdinal()
-                .domain(data)
-                .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+                .domain(Object.keys(data))
+                .range(d3.schemePaired)
 
             // Compute the position of each group on the pie:
             var pie = d3.pie()
                 .value(function(d) {return d.value; })
             var data_ready = pie(d3.entries(data))
             console.log(data_ready);
+
+            // The arc generator
+            var arc = d3.arc()
+                .innerRadius(radius * 0.5)         // This is the size of the donut hole
+                .outerRadius(radius * 0.8)
+
+            // Another arc that won't be drawn. Just for labels positioning
+            var outerArc = d3.arc()
+                .innerRadius(radius * 0.9)
+                .outerRadius(radius * 0.9)
+
             // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
             svg
-                .selectAll('whatever')
+                .selectAll('all')
                 .data(data_ready)
                 .enter()
                 .append('path')
-                .attr('d', d3.arc()
-                    .innerRadius(100)         // This is the size of the donut hole
-                    .outerRadius(radius)
-                )
+                .attr('d', arc)
                 .attr('fill', function(d){ return(color(d.data.key)) })
-                .attr("stroke", "black")
+                .attr("stroke", "white")
                 .style("stroke-width", "2px")
-                .style("opacity", 0.7)    
+                
+                
+            // Add the polylines between chart and labels:
+            svg
+                .selectAll('allPolylines')
+                .data(data_ready)
+                .enter()
+                .append('polyline')
+                .attr("stroke", "black")
+                .style("fill", "none")
+                .attr("stroke-width", 1)
+                .attr('points', function(d) {
+                    var posA = arc.centroid(d) // line insertion in the slice
+                    var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+                    var posC = outerArc.centroid(d) + 1 ; // Label position = almost the same as posB
+                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+                    posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+                    return [posA, posB, posC]
+                })
+
+            // Add the polylines between chart and labels:
+            svg
+                .selectAll('allLabels')
+                .data(data_ready)
+                .enter()
+                .append('text')
+                .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+                .attr('transform', function(d) {
+                    var pos = outerArc.centroid(d) + 50;
+                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                    pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+                    return 'translate(' + pos + ')';
+                })
+                .style('text-anchor', function(d) {
+                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                    return (midangle < Math.PI ? 'start' : 'end')
+                })
         }
 
     })

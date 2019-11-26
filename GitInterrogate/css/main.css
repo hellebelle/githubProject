@@ -101,8 +101,16 @@ p {
     opacity: 0;
   }
 }
+.user_container {
+  visibility: hidden;
+}
+
+#user_img {
+  width: 100px;
+  height: 100px;
+}
+
 h2 {
-  text-align: center;
   color: #030303;
   font-size: 3.5em;
 }
