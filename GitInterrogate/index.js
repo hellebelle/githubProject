@@ -1,86 +1,174 @@
-const btnRepo = document.getElementById("btnRepos")
-const btnIss = document.getElementById("btnIss")
-const btnCommits = document.getElementById("btnCommits")
-const divResult = document.getElementById("divResult")
-btnRepo.addEventListener("click", getRepos)
-btnIss.addEventListener("click", getIssues)
-btnCommits.addEventListener("click", e=>getCommits())
+$(document).ready(function(){
+    $("#search-bar").click(function() {
+       $("#search").css("width","80%"); 
+       $("#search").css("paddingLeft","60px");
+       $("#search").css("cursor","text");
+       $("#search").focus();
 
-async function getRepos(){
-    clear();
-    const url = "https://api.github.com/search/repositories?q=stars:>150000"
-    const response = await fetch(url)
-    const result = await response.json()
-        
-    result.items.forEach(i =>{
-        const anchor = document.createElement("a")
-        anchor.href = i.html_url
-        anchor.textContent = i.full_name
-        divResult.appendChild(anchor)
-        divResult.appendChild(document.createElement("br"))
+       var i = 0;
+       var message = 'Search for a GitHub User';
+       var speed = 100;
 
-    })    
-}
-
-async function getIssues(){
-    clear();
-    const url = "https://api.github.com/search/issues?q=author:raisedadead repo:freecodecamp/freecodecamp type:issue"
-    const response = await fetch(url)
-    const result = await response.json()
-        
-    result.items.forEach(i =>{
-        const anchor = document.createElement("a")
-        anchor.href = i.html_url
-        anchor.textContent = i.title
-        divResult.appendChild(anchor)
-        divResult.appendChild(document.createElement("br"))
-
-    })  
-}
-
-async function getCommits(url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2019-03-01..2019-03-31"){
-    clear();
-
-    const headers = {
-        "Accept" : "application/vnd.github.cloak-preview"
-    }
-    const response = await fetch(url, {
-        "method" : "GET",
-        "headers" : headers
+       function typeWriter(){
+           if (i < message.length){
+               msg = $("#search").attr("placeholder") + message.charAt(i);
+               $("#search").attr("placeholder",msg)
+               i++;
+               setTimeout(typeWriter,speed);
+           }
+       }
+       typeWriter();
     })
-    const link = response.headers.get("link")
-    const links = link.split(",")
-    const urls = links.map(a=> {
-        return{
-            url: a.split(";")[0].replace(">","").replace("<",""),
-            title: a.split(";")[1]
-        }
-    })
-    const result = await response.json()
-        
-    result.items.forEach(i =>{
-        const img = document.createElement("img")
-        img.src =i.author.avatar_url;
-        img.style.width ="32px"
-        img.style.height ="32px"
-        const anchor = document.createElement("a")
-        anchor.href = i.html_url
-        anchor.textContent = i.commit.message.substr(0,120) + "..."
-        divResult.appendChild(img)
-        divResult.appendChild(anchor)
-        divResult.appendChild(document.createElement("br"))
 
-    }) 
+    $("#search").keydown(function () {
+        $("#btn").css("visibility", "visible");
+    })
+
+    $("#btn").click(function () {
+        $("div.container").css("visibility","hidden");
+        $("#btn").css("visibility","hidden");
+
+        var user = $("#search").val() ? $("#search").val() : "github";
+        var url_user = "https://api.github.com/users/" + user;
+        loadUser(url_user, displayUser );
+        loadRepos(url_user,displayRepos);
+        
+        function loadUser(url_user,callback1) {
+            $.get(url_user,
+                function (data, status) {
+                    console.log(status);
+                    callback1(data);
+                }).fail(function(){
+                    alert("User Not Found. Please refresh and try again with a valid username.");
+                });
+        };
     
-    urls.forEach(u=> {
-          const btn =document.createElement("button")
-          btn.textContent = u.title;
-          btn.addEventListener("click", e=> getCommits(u.url) )
-          divResult.appendChild(btn);
-    })
-}
+        function loadRepos(url_user,callback2) {
+            $.get(url_user + "/repos",
+                function (data,status) {
+                    console.log(status);
+                    success: callback2(data,status);
+            });
+        }
 
-function clear(){
-    while(divResult.firstChild)
-        divResult.removeChild(divResult.firstChild)
-}
+        function getLanguages(callback, repo){
+            $.get("https://api.github.com/repos/" + user + "/" + repo + "/languages",
+                function (data, status) {
+                    console.log(status);
+                    success: callback(data,repo);
+            });
+        };
+
+        function displayUser(data) {
+            $("div.container").remove();
+            $("div.user_container").css("visibility", "visible");
+            $("#user_img").attr("src", data.avatar_url);
+            $("#username").append(data.login);
+            
+        }
+
+        function displayRepos(data) {
+            for (var i = 0; i < data.length; i++) {
+				$("div.content").append("<li id='repo" + i + "'>" + data[i].name + "</li>");
+			};
+            $("button.dropbtn").css("visibility", "visible");
+			$("div.content").children().click(function(){
+			
+				// get the chosen repo id by reference to the id of the element in list that was clicked
+                var repoChoice = $("#"+this.id).html();
+                getLanguages(displayLanguages, repoChoice);
+			});
+        }
+
+        function displayLanguages(data, repoChoice){
+            $("#repo_name").remove();
+            d3.selectAll("svg").remove();
+            $("div.repos_links").after("<div id = 'repo_name'> Languages used:"+ repoChoice +"</div>")
+            // set the dimensions and margins of the graph
+            var width = 1050
+            var height = 650
+            var margin = 40
+            // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+            var radius = Math.min(width, height)/2 - margin
+            var svg = d3.select("#graph")
+                .append("svg")
+                    .attr("width",width)
+                    .attr("height",height)
+                .append("g")
+                    .attr("transform", "translate(" + width/2 + "," + height/2 + ")");
+            
+            // set the color scale
+            var color = d3.scaleOrdinal()
+                .domain(Object.keys(data))
+                .range(d3.schemePaired)
+
+            // Compute the position of each group on the pie:
+            var pie = d3.pie()
+                .value(function(d) {return d.value; })
+            var data_ready = pie(d3.entries(data))
+            console.log(data_ready);
+
+            // The arc generator
+            var arc = d3.arc()
+                .innerRadius(radius * 0.5)         // This is the size of the donut hole
+                .outerRadius(radius * 0.8)
+
+            // Another arc that won't be drawn. Just for labels positioning
+            var outerArc = d3.arc()
+                .innerRadius(radius * 0.9)
+                .outerRadius(radius * 0.9)
+
+            // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+            svg
+                .selectAll('all')
+                .data(data_ready)
+                .enter()
+                .append('path')
+                .attr('d', arc)
+                .attr('fill', function(d){ return(color(d.data.key)) })
+                .attr("stroke", "white")
+                .style("stroke-width", "2px")
+                
+                
+            // Add the polylines between chart and labels:
+            svg
+                .selectAll('allPolylines')
+                .data(data_ready)
+                .enter()
+                .append('polyline')
+                .attr("stroke", "black")
+                .style("fill", "none")
+                .attr("stroke-width", 1)
+                .attr('points', function(d) {
+                    var posA = arc.centroid(d) // line insertion in the slice
+                    var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+                    var posC = outerArc.centroid(d) + 1 ; // Label position = almost the same as posB
+                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+                    posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+                    return [posA, posB, posC]
+                })
+
+            // Add the polylines between chart and labels:
+            svg
+                .selectAll('allLabels')
+                .data(data_ready)
+                .enter()
+                .append('text')
+                .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+                .attr('transform', function(d) {
+                    var pos = outerArc.centroid(d) + 50;
+                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                    pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+                    return 'translate(' + pos + ')';
+                })
+                .style('text-anchor', function(d) {
+                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                    return (midangle < Math.PI ? 'start' : 'end')
+                })
+        }
+
+    })
+    
+
+
+});
