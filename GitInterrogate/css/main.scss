@@ -2,7 +2,7 @@ body {
     height: 100vh;
     margin: 0;
     display: grid;
-    //justify-content: center;
+    
     align-items: center;
     font-family: 'Montserrat';
     background-color:white;
@@ -12,7 +12,9 @@ h1 {
     font-size: 3.5em;
 }
 .container {
+    padding: 50px;
     text-align: center;
+    justify-content: center;
 }  
 input {
     font-family: 'Montserrat';
@@ -50,20 +52,12 @@ input {
     cursor: pointer;
 }
 
-h2{
-    justify-content: first baseline;
-    align-content: flex-start;
-
-} 
-
 button{
     font-family: 'Montserrat';
     font-size: 1.2em;
     color: rgb(8, 8, 8);
     width: 110px;
     height: 45px;
-   // padding: 15px;
-    //margin: 10px;
     text-align: center;
     border: none;
     border-radius: 20px;
@@ -92,7 +86,6 @@ p {
     animation: grow 1s 3;
 }
 
-
 @keyframes grow {
     from {
         transform: scale(1);
@@ -105,32 +98,65 @@ p {
 
 .user_container{
     visibility: hidden;
+    position: relative;
+
 }
 
 #user_img{
     width: 100px;
     height:100px;
-    // border: 1px solid #ddd;
-    // border-radius: 4px;
-    // padding: 5px;
-    
+       
+}
+
+#user_profile{
+    height: 130px;
+    width: 1690px;
+    position: sticky;
+    align-content: center;
+    top: 0;
+    background-color: rgb(100, 175, 100);
 }
 h2 {
-    //text-align: center;
+    position: sticky;
+    top: 0;
+    margin: 0%;
+    text-align: center;
     color: rgb(3, 3, 3);
     font-size: 3.5em;
 }
+#repo_details{
+    position: relative;
+    left:auto;
+    width: 852px;
+    height:600px;
+
+}
+
+#repo_name{
+    position: absolute;
+    top:350px;
+    font-size: 2.5em;
+}
+
 .dropbtn {
     background-color:rgb(15, 143, 68);
     color: white;
     width: 120px;
-    //padding: 16px;
     font-size: 16px;
-    border: none;
+    border: black;
 }
-
+#graph_container{
+    position: relative;
+    left: 852px;
+    height: 655px;
+    width: 852px;
+    align-content: center;
+    background-color: gray;
+    z-index: -1;
+}
 .repos_links{
     position: relative;
+    top: 0;
     display: inline-block;
 }
 

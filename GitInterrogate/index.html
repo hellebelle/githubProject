@@ -28,19 +28,25 @@
     <div class = "user_container">
         <div id ="user_profile">
             <h2 id = "username">
-
-                    <img id = "user_img">
-                    
+                    <img id = "user_img">      
             </h2>
+            <div id="repo_details">
+                <div class ="repos_links">
+                        <button class = "dropbtn">REPOSITORIES</button>
+                        <div class = "content"></div>
+                </div>
+                <div id = "repo_name"></div>
+            </div>
+            
         </div>
     
-        <div class ="repos_links">
-            <button class = "dropbtn">REPOSITORIES</button>
-            <div class = "content"></div>
-        </div>
-        <div id = "repo_name"></div>
+
+        
         <!-- Create a div where the graph will take place -->
-        <div id = "graph"></div>
+        <div id = "graph_container">
+            <div id = "graph"></div>
+        </div>
+        
     </div>
     
     <script src = "imchangingit.js"></script>

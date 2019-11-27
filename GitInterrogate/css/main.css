@@ -13,7 +13,9 @@ h1 {
 }
 
 .container {
+  padding: 50px;
   text-align: center;
+  justify-content: center;
 }
 
 input {
@@ -50,11 +52,6 @@ input:focus {
   position: absolute;
   z-index: 1;
   cursor: pointer;
-}
-
-h2 {
-  justify-content: first baseline;
-  align-content: flex-start;
 }
 
 button {
@@ -103,6 +100,7 @@ p {
 }
 .user_container {
   visibility: hidden;
+  position: relative;
 }
 
 #user_img {
@@ -110,9 +108,35 @@ p {
   height: 100px;
 }
 
+#user_profile {
+  height: 130px;
+  width: 1690px;
+  position: sticky;
+  align-content: center;
+  top: 0;
+  background-color: #64af64;
+}
+
 h2 {
+  position: sticky;
+  top: 0;
+  margin: 0%;
+  text-align: center;
   color: #030303;
   font-size: 3.5em;
+}
+
+#repo_details {
+  position: relative;
+  left: auto;
+  width: 852px;
+  height: 600px;
+}
+
+#repo_name {
+  position: absolute;
+  top: 350px;
+  font-size: 2.5em;
 }
 
 .dropbtn {
@@ -120,11 +144,22 @@ h2 {
   color: white;
   width: 120px;
   font-size: 16px;
-  border: none;
+  border: black;
+}
+
+#graph_container {
+  position: relative;
+  left: 852px;
+  height: 655px;
+  width: 852px;
+  align-content: center;
+  background-color: gray;
+  z-index: -1;
 }
 
 .repos_links {
   position: relative;
+  top: 0;
   display: inline-block;
 }
 

@@ -30,7 +30,7 @@ $(document).ready(function(){
 
         var user = $("#search").val() ? $("#search").val() : "github";
         var url_user = "https://api.github.com/users/" + user;
-        loadUser(url_user, displayUser);
+        loadUser(url_user, displayUser );
         loadRepos(url_user,displayRepos);
         
         function loadUser(url_user,callback1) {
@@ -63,7 +63,7 @@ $(document).ready(function(){
             $("div.container").remove();
             $("div.user_container").css("visibility", "visible");
             $("#user_img").attr("src", data.avatar_url);
-            $("#user_profile").append(data.login);
+            $("#username").append(data.login);
             
         }
 
@@ -83,7 +83,7 @@ $(document).ready(function(){
         function displayLanguages(data, repoChoice){
             $("#repo_name").remove();
             d3.selectAll("svg").remove();
-            $("div.user_container").append("<div id = 'repo_name'>"+ repoChoice +"</div>")
+            $("div.repos_links").after("<div id = 'repo_name'> Languages used:"+ repoChoice +"</div>")
             // set the dimensions and margins of the graph
             var width = 1050
             var height = 650
