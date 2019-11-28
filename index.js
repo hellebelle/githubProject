@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    //when search button is pressed
     $("#search-bar").click(function() {
        $("#search").css("width","80%"); 
        $("#search").css("paddingLeft","60px");
@@ -19,21 +20,25 @@ $(document).ready(function(){
        }
        typeWriter();
     })
-
+    //making search button visible
     $("#search").keydown(function () {
         $("#btn").css("visibility", "visible");
     })
-
+    //when search button is pressed
     $("#btn").click(function () {
+        //clear the page
         $("div.container").css("visibility","hidden");
         $("#btn").css("visibility","hidden");
-
+        //retrieving user from search input
         var user = $("#search").val() ? $("#search").val() : "github";
         var url_user = "https://api.github.com/users/" + user;
+        //loading user and repositories
         loadUser(url_user, displayUser );
         loadRepos(url_user,displayRepos);
         
+        //getting user's data
         function loadUser(url_user,callback1) {
+            
             $.get(url_user,
                 function (data, status) {
                     console.log(status);
@@ -42,7 +47,7 @@ $(document).ready(function(){
                     alert("User Not Found. Please refresh and try again with a valid username.");
                 });
         };
-    
+        //getting repositories
         function loadRepos(url_user,callback2) {
             $.get(url_user + "/repos",
                 function (data,status) {
@@ -50,7 +55,7 @@ $(document).ready(function(){
                     success: callback2(data,status);
             });
         }
-
+        //getting the languages used in a repository
         function getLanguages(callback, repo){
             $.get("https://api.github.com/repos/" + user + "/" + repo + "/languages",
                 function (data, status) {
@@ -58,7 +63,7 @@ $(document).ready(function(){
                     success: callback(data,repo);
             });
         };
-
+        //displaying page with user info
         function displayUser(data) {
             $("div.container").remove();
             $("div.user_container").css("visibility", "visible");
@@ -66,11 +71,12 @@ $(document).ready(function(){
             $("#username").append(data.login);
             
         }
-
+        //displaying repo information
         function displayRepos(data) {
             for (var i = 0; i < data.length; i++) {
 				$("div.content").append("<li id='repo" + i + "'>" + data[i].name + "</li>");
-			};
+            };
+            //dropdown button containing first 30 repos returned
             $("button.dropbtn").css("visibility", "visible");
 			$("div.content").children().click(function(){
 			
@@ -79,7 +85,7 @@ $(document).ready(function(){
                 getLanguages(displayLanguages, repoChoice);
 			});
         }
-
+        //displaying graph
         function displayLanguages(data, repoChoice){
             $("#repo_name").remove();
             d3.selectAll("svg").remove();
