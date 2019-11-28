@@ -27,8 +27,13 @@ $(document).ready(function(){
     //when search button is pressed
     $("#btn").click(function () {
         //clear the page
-        $("div.container").css("visibility","hidden");
-        $("#btn").css("visibility","hidden");
+        //$("div.container").css("visibility","hidden");
+        //$("#btn").css("visibility","hidden");
+        // $("h2").text("");
+        $(".dropbtn").text("REPOSITORIES");
+        $("div.content").text("");
+        $("#repo_name").text("");
+        d3.selectAll("svg").remove();
         //retrieving user from search input
         var user = $("#search").val() ? $("#search").val() : "github";
         var url_user = "https://api.github.com/users/" + user;
@@ -65,10 +70,13 @@ $(document).ready(function(){
         };
         //displaying page with user info
         function displayUser(data) {
-            $("div.container").remove();
+           // $("div.container").remove();
             $("div.user_container").css("visibility", "visible");
+            // $("h2").text(data.login);
             $("#user_img").attr("src", data.avatar_url);
-            $("#username").append(data.login);
+            // var h2 =  $("<h2></h2>").text(data.login)
+            //$("#repo_details").before(h2);
+            //$("#username").append(data.login);
             
         }
         //displaying repo information
@@ -80,8 +88,11 @@ $(document).ready(function(){
             $("button.dropbtn").css("visibility", "visible");
 			$("div.content").children().click(function(){
 			
-				// get the chosen repo id by reference to the id of the element in list that was clicked
+                // get the chosen repo id by reference to the id of the element in list that was clicked
+                
                 var repoChoice = $("#"+this.id).html();
+                $(".dropbtn").text("");
+                $(".dropbtn").text(repoChoice);
                 getLanguages(displayLanguages, repoChoice);
 			});
         }

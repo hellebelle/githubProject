@@ -1,10 +1,16 @@
+html {
+  background: url("../images/back.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body {
-  height: 100vh;
   margin: 0;
   display: grid;
   align-items: center;
-  font-family: "Montserrat";
-  background-color: white;
+  font-family: "Roboto Mono";
 }
 
 h1 {
@@ -19,14 +25,14 @@ h1 {
 }
 
 input {
-  font-family: "Montserrat";
-  background: #0f8f44;
+  font-family: "Roboto Mono";
+  background: white;
   width: 20px;
   height: 20px;
   padding: 20px;
   border-radius: 30px;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   transition: width 1s ease;
   font-size: 1.6em;
@@ -55,7 +61,7 @@ input:focus {
 }
 
 button {
-  font-family: "Montserrat";
+  font-family: "Roboto Mono";
   font-size: 1.2em;
   color: #080808;
   width: 110px;
@@ -84,7 +90,7 @@ p {
   border-radius: 50%;
   width: 51px;
   height: 51px;
-  border: 4px solid #0f8f44;
+  border: 4px solid white;
   position: absolute;
   animation: grow 1s 3;
 }
@@ -101,29 +107,35 @@ p {
 .user_container {
   visibility: hidden;
   position: relative;
+  width: 100%;
+  padding-top: 8em;
 }
 
 #user_img {
   width: 100px;
   height: 100px;
+  display: block;
+  align-content: left;
+  border-radius: 50%;
+  padding-right: 1em;
 }
 
 #user_profile {
-  height: 130px;
-  width: 1690px;
+  height: 100%;
+  width: 100%;
   position: sticky;
-  align-content: center;
+  align-content: left;
+  display: flex;
   top: 0;
-  background-color: #64af64;
 }
 
 h2 {
   position: sticky;
   top: 0;
   margin: 0%;
-  text-align: center;
+  text-align: left;
   color: #030303;
-  font-size: 3.5em;
+  font-size: 2em;
 }
 
 #repo_details {
@@ -136,12 +148,12 @@ h2 {
 #repo_name {
   position: absolute;
   top: 350px;
-  font-size: 2.5em;
+  font-size: 16px;
 }
 
 .dropbtn {
-  background-color: #0f8f44;
-  color: white;
+  background-color: whitesmoke;
+  color: black;
   width: 120px;
   font-size: 16px;
   border: black;
@@ -149,11 +161,9 @@ h2 {
 
 #graph_container {
   position: relative;
-  left: 852px;
-  height: 655px;
-  width: 852px;
-  align-content: center;
-  background-color: gray;
+  left: 50%;
+  height: 40%;
+  width: 50%;
   z-index: -1;
 }
 
@@ -166,7 +176,6 @@ h2 {
 .content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -176,7 +185,7 @@ h2 {
 
 /* Links inside the dropdown */
 .content li {
-  background-color: #00863c;
+  background-color: whitesmoke;
   color: black;
   padding: 12px 16px;
   text-decoration: none;

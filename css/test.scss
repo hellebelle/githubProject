@@ -1,0 +1,36 @@
+
+.container {
+    height: 50%;
+    width:100%;
+  //  padding: 50px;
+    text-align: center;
+    justify-content: center;
+
+}  
+.user_container{
+    visibility: hidden;
+    position: relative;
+    //width:100%;
+    //padding-top: 8em;
+
+}
+
+/* Links inside the dropdown */
+.content li {
+    background-color:whitesmoke;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+
+  }
+  
+  /* Change color of dropdown links on hover */
+  .content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .repos_links:hover .content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .repos_links:hover .dropbtn {background-color: #3e8e41;}
