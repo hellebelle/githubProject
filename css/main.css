@@ -108,7 +108,7 @@ p {
   visibility: hidden;
   position: relative;
   width: 100%;
-  padding-top: 8em;
+  padding-top: 2em;
 }
 
 #user_img {
@@ -121,8 +121,8 @@ p {
 }
 
 #user_profile {
-  height: 100%;
-  width: 100%;
+  height: 600px;
+  width: 50%;
   position: sticky;
   align-content: left;
   display: flex;
@@ -141,13 +141,25 @@ h2 {
 #repo_details {
   position: relative;
   left: auto;
-  width: 852px;
+  width: 50%;
   height: 600px;
+}
+
+#bio {
+  position: absolute;
+  top: 130px;
+  font-size: 16px;
+}
+
+#followers {
+  position: absolute;
+  top: 180px;
+  font-size: 16px;
 }
 
 #repo_name {
   position: absolute;
-  top: 350px;
+  top: 210px;
   font-size: 16px;
 }
 
@@ -159,12 +171,14 @@ h2 {
   border: black;
 }
 
-#graph_container {
+#g-container {
   position: relative;
   left: 50%;
   height: 40%;
   width: 50%;
   z-index: -1;
+  top: 0;
+  display: inline-block;
 }
 
 .repos_links {

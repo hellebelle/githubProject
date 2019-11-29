@@ -1,5 +1,5 @@
 # githubProject
-Interrogating the GitHub API to build a visualisation of the languages used in a repository. Only the first 30 repositories returned are displayed. A donut chart is displayed containing the languages used.
+Interrogating the GitHub API to build a visualisation of the languages used in a repository. Only the first 30 repositories returned are displayed. A piechart is displayed containing the languages used. Only the major languages used are labelled.
 
 Make sure node.js and npm are downloaded. You can download it from [here](https://nodejs.org/en/download/).
 
@@ -10,4 +10,4 @@ git clone <url>
 cd <folder location>
 npm start || npm live-server
 ```
-
+![Opening page](https://github.com/hellebelle/githubProject/images/Capture.jpg)
