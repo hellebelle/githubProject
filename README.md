@@ -11,3 +11,5 @@ cd <folder location>
 npm start || npm live-server
 ```
 ![Opening page](https://github.com/hellebelle/githubProject/blob/master/images/Capture.JPG)
+!['Dispaying User info'](https://github.com/hellebelle/githubProject/blob/master/images/userdisplay.JPG)
+!['Piechart being displayed'](https://github.com/hellebelle/githubProject/blob/master/images/piechart.JPG)
