@@ -10,4 +10,4 @@ git clone <url>
 cd <folder location>
 npm start || npm live-server
 ```
-![Opening page](https://github.com/hellebelle/githubProject/images/Capture.jpg)
+![Opening page](https://github.com/hellebelle/githubProject/blob/master/images/Capture.JPG)
